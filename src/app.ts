@@ -6,8 +6,23 @@ const app = express();
 app.use(express.json());
 app.use(express.text());
 
-// middleware
+// Router
 
+const userRouter = express.Router();
+app.use("/api/v1/users", userRouter);
+
+userRouter.post("/create-user", (req: Request, res: Response) => {
+  const user = req.body;
+  console.log(user);
+
+  res.json({
+    success: true,
+    message: "user created successfully",
+    data: user,
+  });
+});
+
+// middleware
 const logger = (req: Request, res: Response, next: NextFunction) => {
   console.log(req.url, req.method, req.hostname);
   next();
